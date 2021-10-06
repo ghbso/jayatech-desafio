@@ -1,6 +1,5 @@
 package com.jaya.demo.dto.request;
 
-import com.jaya.demo.enums.Currency;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,11 +11,11 @@ import java.math.BigDecimal;
 public class ExchangeRatesDtoRequest {
 
     @NotNull(message = "Enter user ID!")
-    private String userdID;
+    private Long userdID;
     @NotNull(message = "Enter origin currency!")
-    private Currency fromCurrency;
+    private String fromCurrency;
     @NotNull(message = "Enter destiny currency!")
-    private Currency toCurrency;
+    private String toCurrency;
     @NotNull(message = "Enter value to be exchanged!")
     private BigDecimal value;
 
