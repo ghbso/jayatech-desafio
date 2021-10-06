@@ -1,4 +1,4 @@
-package com.jaya.demo.config;
+package com.jaya.demo.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

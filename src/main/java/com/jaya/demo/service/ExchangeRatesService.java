@@ -7,6 +7,7 @@ import com.jaya.demo.factory.CurrencyFactory;
 import com.jaya.demo.model.currency.Currency;
 import com.jaya.demo.repository.ExchangeRecordRepository;
 import com.jaya.demo.service.ws.WSExchangeRates;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ExchangeRatesService {
 
     private final WSExchangeRates wsExchangeRatesAPI;
@@ -32,6 +34,7 @@ public class ExchangeRatesService {
 
     public ExchangeRecord exchangeAndSave(ExchangeRatesDtoRequest exchangeRatesDtoRequest){
         ExchangeRecord exchange = this.exchange(exchangeRatesDtoRequest);
+        log.info("Currency exchanged!");
         return repository.save(exchange);
     }
 

@@ -1,6 +1,6 @@
 package com.jaya.demo.resources;
 
-import com.jaya.demo.config.SpringFoxConfig;
+import com.jaya.demo.config.swagger.SpringFoxConfig;
 import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
 import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.service.ExchangeRatesService;
@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exchange")
+
 @Api(tags = {SpringFoxConfig.CURRENCY_EXCHANGE_ENDPOINTS})
 public class ExchangeRatesResource {
 
