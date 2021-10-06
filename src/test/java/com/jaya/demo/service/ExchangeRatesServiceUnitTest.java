@@ -7,10 +7,8 @@ import com.jaya.demo.exception.InvalidCurrency;
 import com.jaya.demo.factory.CurrencyFactory;
 import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.repository.ExchangeRecordRepository;
-import com.jaya.demo.resources.ExchangeRatesResource;
-import com.jaya.demo.service.ws.WSExchangeRatesAPI;
+import com.jaya.demo.service.ws.WSExchangeRates;
 import org.jeasy.random.EasyRandom;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +27,7 @@ import static org.mockito.Mockito.when;
 class ExchangeRatesServiceUnitTest {
 
     @Mock
-    private WSExchangeRatesAPI wsExchangeRatesAPI;
+    private WSExchangeRates wsExchangeRatesAPI;
     @Mock
     private ExchangeRecordRepository repository;
     private CurrencyFactory currencyFactory;

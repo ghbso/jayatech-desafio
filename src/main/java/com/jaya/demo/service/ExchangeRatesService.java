@@ -6,7 +6,7 @@ import com.jaya.demo.dto.response.ws.WSExchangeRatesDtoResponse;
 import com.jaya.demo.factory.CurrencyFactory;
 import com.jaya.demo.model.currency.Currency;
 import com.jaya.demo.repository.ExchangeRecordRepository;
-import com.jaya.demo.service.ws.WSExchangeRatesAPI;
+import com.jaya.demo.service.ws.WSExchangeRates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,12 @@ import java.time.LocalDateTime;
 @Service
 public class ExchangeRatesService {
 
-    private final WSExchangeRatesAPI wsExchangeRatesAPI;
+    private final WSExchangeRates wsExchangeRatesAPI;
     private final CurrencyFactory currencyFactory;
     private final ExchangeRecordRepository repository;
 
     @Autowired
-    public ExchangeRatesService(WSExchangeRatesAPI wsExchangeRatesAPI, CurrencyFactory currencyFactory, ExchangeRecordRepository repository) {
+    public ExchangeRatesService(WSExchangeRates wsExchangeRatesAPI, CurrencyFactory currencyFactory, ExchangeRecordRepository repository) {
         this.wsExchangeRatesAPI = wsExchangeRatesAPI;
         this.currencyFactory = currencyFactory;
         this.repository = repository;

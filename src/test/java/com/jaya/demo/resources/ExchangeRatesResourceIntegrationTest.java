@@ -2,7 +2,7 @@ package com.jaya.demo.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
-import org.junit.jupiter.api.Disabled;
+import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +26,28 @@ class ExchangeRatesResourceIntegrationTest {
 
 
     @Test
+    @DisplayName("Should return 200 code")
+    void shouldReturn200() throws Exception {
+
+        ExchangeRatesDtoRequest requestDto = new EasyRandom().nextObject(ExchangeRatesDtoRequest.class);
+        requestDto.setFromCurrency("BRL");
+        requestDto.setToCurrency("BRL");
+        mvc.perform(MockMvcRequestBuilders
+                .post(URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestDto))
+        ).andExpect(status().isOk());
+    }
+
+    @Test
     @DisplayName("Should return 400 code when mandatory fields are missing")
     void shouldReturn400_WhenMandatoryFieldsAreMissing() throws Exception {
 
         ExchangeRatesDtoRequest requestDto = ExchangeRatesDtoRequest.builder().build();
         mvc.perform(MockMvcRequestBuilders
-                        .post(URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(requestDto))
-                )
-
-                .andExpect(status().isOk());
+                .post(URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestDto))
+        ).andExpect(status().isBadRequest());
     }
 }
