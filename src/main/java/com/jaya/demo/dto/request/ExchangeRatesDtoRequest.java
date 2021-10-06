@@ -1,5 +1,6 @@
 package com.jaya.demo.dto.request;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
+@ApiModel("ExchangeRatesRequestModel")
 public class ExchangeRatesDtoRequest {
 
     @NotNull(message = "Enter user ID!")
