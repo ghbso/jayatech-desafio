@@ -17,9 +17,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 
@@ -75,5 +78,13 @@ class ExchangeRatesServiceUnitTest {
     void shouldFailExchangeAndSaveTransaction_WhenCurrencyNotAvailable() {
         exchangeRatesDtoRequest.setFromCurrency("USD2");
         assertThrows(InvalidCurrency.class, () -> exchangeRatesService.exchangeAndSave(exchangeRatesDtoRequest));
+    }
+
+    @Test
+    @DisplayName("Should return list of exchange records")
+    void shoulReturnLExchangeRecordList() {
+        List<ExchangeRecord> recordList = Collections.singletonList(ExchangeRecord.builder().build());
+        when(repository.findByUserdID(anyLong())).thenReturn(recordList);
+        assertEquals(recordList, exchangeRatesService.findExchangeRecordsByUser(1L));
     }
 }

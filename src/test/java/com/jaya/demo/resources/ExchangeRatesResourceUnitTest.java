@@ -1,24 +1,23 @@
 package com.jaya.demo.resources;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
+import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.service.ExchangeRatesService;
 import org.jeasy.random.EasyRandom;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 
 
@@ -28,18 +27,26 @@ class ExchangeRatesResourceUnitTest {
     @Mock
     private ExchangeRatesService exchangeRatesService;
     private ExchangeRatesResource exchangeRatesResource;
-    private ExchangeRatesDtoRequest dto;
 
     @BeforeEach
     void setup() {
         exchangeRatesResource = new ExchangeRatesResource(exchangeRatesService);
-        dto = new EasyRandom().nextObject(ExchangeRatesDtoRequest.class);
     }
 
     @Test
-    @DisplayName("Should return valid response")
-    void shouldReturnValidResponse() {
-        Assertions.assertNotNull(exchangeRatesResource.exchangeCurrency(dto));
+    @DisplayName("Should return exchange record saved")
+    void shouldReturnExchangeRecordSaved() {
+        ExchangeRecord build = ExchangeRecord.builder().build();
+        ExchangeRatesDtoRequest exchangeRatesDtoRequest = new EasyRandom().nextObject(ExchangeRatesDtoRequest.class);
+        when(exchangeRatesService.exchangeAndSave(any(ExchangeRatesDtoRequest.class))).thenReturn(build);
+        assertEquals(build, exchangeRatesResource.exchangeCurrency(exchangeRatesDtoRequest).getBody());
+    }
 
+    @Test
+    @DisplayName("Should return list of exchange records")
+    void shoulReturnLExchangeRecordList() {
+        List<ExchangeRecord> recordList = Collections.singletonList(ExchangeRecord.builder().build());
+        when(exchangeRatesService.findExchangeRecordsByUser(anyLong())).thenReturn(recordList);
+        assertEquals(recordList, exchangeRatesResource.findExchangeRecordsByUser(1L).getBody());
     }
 }

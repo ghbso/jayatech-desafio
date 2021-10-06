@@ -24,21 +24,6 @@ class ExchangeRatesResourceIntegrationTest {
 
     private static String URL = "/exchange";
 
-
-    @Test
-    @DisplayName("Should return 200 code")
-    void shouldReturn200() throws Exception {
-
-        ExchangeRatesDtoRequest requestDto = new EasyRandom().nextObject(ExchangeRatesDtoRequest.class);
-        requestDto.setFromCurrency("BRL");
-        requestDto.setToCurrency("BRL");
-        mvc.perform(MockMvcRequestBuilders
-                .post(URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(requestDto))
-        ).andExpect(status().isOk());
-    }
-
     @Test
     @DisplayName("Should return 400 code when mandatory fields are missing")
     void shouldReturn400_WhenMandatoryFieldsAreMissing() throws Exception {
@@ -50,4 +35,6 @@ class ExchangeRatesResourceIntegrationTest {
                 .content(new ObjectMapper().writeValueAsString(requestDto))
         ).andExpect(status().isBadRequest());
     }
+
+
 }

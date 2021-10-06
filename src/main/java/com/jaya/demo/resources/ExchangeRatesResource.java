@@ -5,12 +5,10 @@ import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.service.ExchangeRatesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/exchange")
@@ -27,5 +25,10 @@ public class ExchangeRatesResource {
     @PostMapping
     public ResponseEntity<ExchangeRecord> exchangeCurrency(@Valid @RequestBody ExchangeRatesDtoRequest exchangeRatesDtoRequest){
         return ResponseEntity.ok(exchangeRatesService.exchangeAndSave(exchangeRatesDtoRequest));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ExchangeRecord>> findExchangeRecordsByUser(@RequestParam Long userID){
+        return ResponseEntity.ok(exchangeRatesService.findExchangeRecordsByUser(userID));
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -34,8 +35,13 @@ public class GlobalResourceExceptionHandler {
         return new ResponseEntity<>(ErrorDtoResponse.builder().message(ex.getMessage()).build(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler({ MissingServletRequestParameterException.class })
+    public ResponseEntity<ErrorDtoResponse> handleMissingServletRequestParameterException(Exception ex) {
+        return new ResponseEntity<>(ErrorDtoResponse.builder().message(ex.getMessage()).build(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<ErrorDtoResponse> handleException(Exception ex) {
-        return new ResponseEntity<>(ErrorDtoResponse.builder().message("Internal error").build(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ErrorDtoResponse.builder().message(ex.getMessage()).build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

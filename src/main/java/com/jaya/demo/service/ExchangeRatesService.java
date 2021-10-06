@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ExchangeRatesService {
@@ -33,6 +34,7 @@ public class ExchangeRatesService {
         ExchangeRecord exchange = this.exchange(exchangeRatesDtoRequest);
         return repository.save(exchange);
     }
+
     public ExchangeRecord exchange(ExchangeRatesDtoRequest exchangeRatesDtoRequest) {
         Currency fromCurrency = currencyFactory.buildCurrency(exchangeRatesDtoRequest.getFromCurrency());
         Currency toCurrency = currencyFactory.buildCurrency(exchangeRatesDtoRequest.getToCurrency());
@@ -46,6 +48,10 @@ public class ExchangeRatesService {
                 .value(exchangeRate.multiply(exchangeRatesDtoRequest.getValue()).round(new MathContext(2, RoundingMode.CEILING)))
                 .dateTime(LocalDateTime.now())
                 .build();
+    }
+
+    public List<ExchangeRecord> findExchangeRecordsByUser(Long userID){
+        return repository.findByUserdID(userID);
     }
 
 }
