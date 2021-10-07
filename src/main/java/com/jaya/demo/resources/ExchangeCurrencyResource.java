@@ -1,7 +1,8 @@
 package com.jaya.demo.resources;
 
 import com.jaya.demo.config.swagger.SpringFoxConfig;
-import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
+import com.jaya.demo.dto.request.ExchangeCurrencyDtoRequest;
+import com.jaya.demo.dto.response.ExchangeRatesDtoResponse;
 import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.service.ExchangeRatesService;
 import io.swagger.annotations.Api;
@@ -19,13 +20,13 @@ import java.util.List;
 @RequestMapping("/exchange")
 
 @Api(tags = {SpringFoxConfig.CURRENCY_EXCHANGE_ENDPOINTS})
-public class ExchangeRatesResource {
+public class ExchangeCurrencyResource {
 
 
     private final ExchangeRatesService exchangeRatesService;
 
     @Autowired
-    public ExchangeRatesResource(ExchangeRatesService exchangeRatesService) {
+    public ExchangeCurrencyResource(ExchangeRatesService exchangeRatesService) {
         this.exchangeRatesService = exchangeRatesService;
     }
 
@@ -36,7 +37,7 @@ public class ExchangeRatesResource {
             @ApiResponse(code = 400, message = "Returns invalid request error."),
             @ApiResponse(code = 500, message = "Returns internal error.")
     })
-    public ResponseEntity<ExchangeRecord> exchangeCurrency(@Valid @RequestBody ExchangeRatesDtoRequest exchangeRatesDtoRequest){
+    public ResponseEntity<ExchangeRatesDtoResponse> exchangeCurrency(@Valid @RequestBody ExchangeCurrencyDtoRequest exchangeRatesDtoRequest){
         return ResponseEntity.ok(exchangeRatesService.exchangeAndSave(exchangeRatesDtoRequest));
     }
 

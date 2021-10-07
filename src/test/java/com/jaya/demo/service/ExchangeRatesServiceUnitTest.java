@@ -1,6 +1,7 @@
 package com.jaya.demo.service;
 
-import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
+import com.jaya.demo.dto.request.ExchangeCurrencyDtoRequest;
+import com.jaya.demo.dto.response.ExchangeRatesDtoResponse;
 import com.jaya.demo.dto.response.ws.WSExchangeRatesDtoResponse;
 import com.jaya.demo.dto.response.ws.WSRatesDtoResponse;
 import com.jaya.demo.exception.InvalidCurrency;
@@ -35,13 +36,13 @@ class ExchangeRatesServiceUnitTest {
     private ExchangeRecordRepository repository;
     private CurrencyFactory currencyFactory;
     private ExchangeRatesService exchangeRatesService;
-    private ExchangeRatesDtoRequest exchangeRatesDtoRequest;
+    private ExchangeCurrencyDtoRequest exchangeRatesDtoRequest;
 
     @BeforeEach
     void setup() {
         currencyFactory = new CurrencyFactory();
         exchangeRatesService = new ExchangeRatesService(wsExchangeRatesAPI, currencyFactory, repository);
-        exchangeRatesDtoRequest = new EasyRandom().nextObject(ExchangeRatesDtoRequest.class);
+        exchangeRatesDtoRequest = new EasyRandom().nextObject(ExchangeCurrencyDtoRequest.class);
 
     }
 
@@ -61,14 +62,14 @@ class ExchangeRatesServiceUnitTest {
             argument.setTransactionID(transactionID);
             return argument;
         });
-        ExchangeRecord exchangeRecord = exchangeRatesService.exchangeAndSave(exchangeRatesDtoRequest);
+        ExchangeRatesDtoResponse exchangeRecord = exchangeRatesService.exchangeAndSave(exchangeRatesDtoRequest);
         assertEquals(transactionID, exchangeRecord.getTransactionID());
         assertEquals(exchangeRatesDtoRequest.getUserdID(), exchangeRecord.getUserdID());
         assertEquals(exchangeRatesDtoRequest.getFromCurrency(), exchangeRecord.getFromCurrency());
         assertEquals(exchangeRatesDtoRequest.getToCurrency(), exchangeRecord.getToCurrency());
         assertNotNull(exchangeRecord.getDateTime());
         assertEquals(0.18, exchangeRecord.getExchangeRate().doubleValue());
-        assertEquals(1.8, exchangeRecord.getValue().doubleValue());
+        assertEquals(1.8, exchangeRecord.getToValue().doubleValue());
 
     }
 

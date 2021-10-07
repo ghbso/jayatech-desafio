@@ -1,6 +1,7 @@
 package com.jaya.demo.service;
 
-import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
+import com.jaya.demo.dto.request.ExchangeCurrencyDtoRequest;
+import com.jaya.demo.dto.response.ExchangeRatesDtoResponse;
 import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.dto.response.ws.WSExchangeRatesDtoResponse;
 import com.jaya.demo.factory.CurrencyFactory;
@@ -32,13 +33,22 @@ public class ExchangeRatesService {
         this.repository = repository;
     }
 
-    public ExchangeRecord exchangeAndSave(ExchangeRatesDtoRequest exchangeRatesDtoRequest){
-        ExchangeRecord exchange = this.exchange(exchangeRatesDtoRequest);
+    public ExchangeRatesDtoResponse exchangeAndSave(ExchangeCurrencyDtoRequest exchangeRatesDtoRequest){
+        ExchangeRecord exchangeRecord = repository.save(this.exchange(exchangeRatesDtoRequest));
         log.info("Currency exchanged!");
-        return repository.save(exchange);
+        return ExchangeRatesDtoResponse.builder()
+                .transactionID(exchangeRecord.getTransactionID())
+                .userdID(exchangeRecord.getUserdID())
+                .fromCurrency(exchangeRecord.getFromCurrency())
+                .toCurrency(exchangeRecord.getToCurrency())
+                .exchangeRate(exchangeRecord.getExchangeRate())
+                .fromValue(exchangeRecord.getValue())
+                .toValue(exchangeRecord.getValue().multiply(exchangeRecord.getExchangeRate()).round(new MathContext(2, RoundingMode.CEILING)))
+                .dateTime(LocalDateTime.now())
+                .build();
     }
 
-    public ExchangeRecord exchange(ExchangeRatesDtoRequest exchangeRatesDtoRequest) {
+    public ExchangeRecord exchange(ExchangeCurrencyDtoRequest exchangeRatesDtoRequest) {
         Currency fromCurrency = currencyFactory.buildCurrency(exchangeRatesDtoRequest.getFromCurrency());
         Currency toCurrency = currencyFactory.buildCurrency(exchangeRatesDtoRequest.getToCurrency());
         WSExchangeRatesDtoResponse exchangeRates = wsExchangeRatesAPI.findExchangeRates();
@@ -48,7 +58,7 @@ public class ExchangeRatesService {
                 .fromCurrency(exchangeRatesDtoRequest.getFromCurrency())
                 .toCurrency(exchangeRatesDtoRequest.getToCurrency())
                 .exchangeRate(exchangeRate.round(new MathContext(2, RoundingMode.CEILING)))
-                .value(exchangeRate.multiply(exchangeRatesDtoRequest.getValue()).round(new MathContext(2, RoundingMode.CEILING)))
+                .value(exchangeRatesDtoRequest.getValue())
                 .dateTime(LocalDateTime.now())
                 .build();
     }

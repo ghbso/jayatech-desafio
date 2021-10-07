@@ -1,6 +1,7 @@
 package com.jaya.demo.resources;
 
-import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
+import com.jaya.demo.dto.request.ExchangeCurrencyDtoRequest;
+import com.jaya.demo.dto.response.ExchangeRatesDtoResponse;
 import com.jaya.demo.model.ExchangeRecord;
 import com.jaya.demo.service.ExchangeRatesService;
 import org.jeasy.random.EasyRandom;
@@ -26,19 +27,19 @@ class ExchangeRatesResourceUnitTest {
 
     @Mock
     private ExchangeRatesService exchangeRatesService;
-    private ExchangeRatesResource exchangeRatesResource;
+    private ExchangeCurrencyResource exchangeRatesResource;
 
     @BeforeEach
     void setup() {
-        exchangeRatesResource = new ExchangeRatesResource(exchangeRatesService);
+        exchangeRatesResource = new ExchangeCurrencyResource(exchangeRatesService);
     }
 
     @Test
     @DisplayName("Should return exchange record saved")
     void shouldReturnExchangeRecordSaved() {
-        ExchangeRecord build = ExchangeRecord.builder().build();
-        ExchangeRatesDtoRequest exchangeRatesDtoRequest = new EasyRandom().nextObject(ExchangeRatesDtoRequest.class);
-        when(exchangeRatesService.exchangeAndSave(any(ExchangeRatesDtoRequest.class))).thenReturn(build);
+        ExchangeRatesDtoResponse build = ExchangeRatesDtoResponse.builder().build();
+        ExchangeCurrencyDtoRequest exchangeRatesDtoRequest = new EasyRandom().nextObject(ExchangeCurrencyDtoRequest.class);
+        when(exchangeRatesService.exchangeAndSave(any(ExchangeCurrencyDtoRequest.class))).thenReturn(build);
         assertEquals(build, exchangeRatesResource.exchangeCurrency(exchangeRatesDtoRequest).getBody());
     }
 

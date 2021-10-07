@@ -1,8 +1,7 @@
 package com.jaya.demo.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jaya.demo.dto.request.ExchangeRatesDtoRequest;
-import org.jeasy.random.EasyRandom;
+import com.jaya.demo.dto.request.ExchangeCurrencyDtoRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ class ExchangeRatesResourceIntegrationTest {
     @DisplayName("Should return 400 code when mandatory fields are missing")
     void shouldReturn400_WhenMandatoryFieldsAreMissing() throws Exception {
 
-        ExchangeRatesDtoRequest requestDto = ExchangeRatesDtoRequest.builder().build();
+        ExchangeCurrencyDtoRequest requestDto = ExchangeCurrencyDtoRequest.builder().build();
         mvc.perform(MockMvcRequestBuilders
                 .post(URL)
                 .contentType(MediaType.APPLICATION_JSON)

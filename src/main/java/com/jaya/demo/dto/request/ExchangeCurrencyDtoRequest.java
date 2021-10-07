@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-@ApiModel("ExchangeRatesRequestModel")
-public class ExchangeRatesDtoRequest {
+@ApiModel("ExchangeCurrencyRequestModel")
+public class ExchangeCurrencyDtoRequest {
 
     @NotNull(message = "Enter user ID!")
     private Long userdID;
