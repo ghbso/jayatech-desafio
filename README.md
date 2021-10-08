@@ -43,15 +43,17 @@ Os testes unitários realizados neste projeto cobrem as camadas de recurso e ser
 
  1. A documentação completa da API encontra-se disponível no seguinte endereço: https://jaya-demo.herokuapp.com/swagger-ui/
  2. Segue abaixo exemplos de reqquest e responses para cada endpoint:
-	-   https://jaya-demo.herokuapp.com/exchange
-		-  Request body:
-					```{ "userdID":  1, fomCurrency":  "BRL",	"toCurrency":  "USD",
-						"value":  1	}```
-		-  Response body:
-					```{"transactionID":  1,"userdID":  1,"fromCurrency":  "BRL",
+    - https://jaya-demo.herokuapp.com/exchange
+        - Método HTTP: POST
+        -  Request body:
+                    ```{ "userdID":  1, fomCurrency":  "BRL",	"toCurrency":  "USD",
+                        "value":  1	}```
+        -  Response body:
+                    ```{"transactionID":  1,"userdID":  1,"fromCurrency":  "BRL",
 "toCurrency":  "USD","value":  0.18,"exchangeRate":  0.18,
 "dateTime":  "2021-10-07T21:57:22.614701"}```
-	-   https://jaya-demo.herokuapp.com//exchange/list?userID=1
-		-  Response body:
-					```[{"transactionID":  1, "userdID":  1, "fromCurrency":  "BRL",
+    - https://jaya-demo.herokuapp.com//exchange/list?userID=1
+        - Método HTTP: GET 
+        -  Response body:
+                    ```[{"transactionID":  1, "userdID":  1, "fromCurrency":  "BRL",
 "toCurrency":  "USD", "value":  0.18, "exchangeRate":  0.18, "dateTime":  "2021-10-07T21:57:22.614701"}]```
