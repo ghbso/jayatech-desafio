@@ -1,9 +1,7 @@
 package com.jaya.demo.factory;
 
 import com.jaya.demo.exception.InvalidCurrency;
-import com.jaya.demo.model.currency.BRL;
-import com.jaya.demo.model.currency.Currency;
-import com.jaya.demo.model.currency.USD;
+import com.jaya.demo.model.currency.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +16,13 @@ public class CurrencyFactory {
             return new USD();
         }
 
+        if (description.equalsIgnoreCase(EUR.class.getSimpleName())){
+            return new EUR();
+        }
+
+        if (description.equalsIgnoreCase(JPY.class.getSimpleName())){
+            return new JPY();
+        }
 
         throw new InvalidCurrency("Currency '" + description+ "' is not available!");
     }
